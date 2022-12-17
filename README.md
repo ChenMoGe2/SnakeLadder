@@ -176,6 +176,41 @@ DollResult(CRC32:20004)
     </tr>
 </table>
 
+Replay(CRC32:10004)
+
+<table>
+    <tr>
+        <td>参数名称</td>
+        <td>参数类型</td>
+        <td>参数说明</td>
+    </tr>
+    <tr>
+        <td>gameId</td>
+        <td>int32</td>
+        <td>游戏ID</td>
+    </tr>
+</table>
+
+ReplayResult(CRC32:20005)
+
+<table>
+    <tr>
+        <td>参数名称</td>
+        <td>参数类型</td>
+        <td>参数说明</td>
+    </tr>
+    <tr>
+        <td>gameId</td>
+        <td>int32</td>
+        <td>游戏ID</td>
+    </tr>
+    <tr>
+        <td>process</td>
+        <td>string</td>
+        <td>游戏回放</td>
+    </tr>
+</table>
+
 3.数据表
 
 用户表
