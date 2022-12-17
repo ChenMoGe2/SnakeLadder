@@ -2,6 +2,7 @@ package dao
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/ChenMoGe2/SnakeLadder/app/model"
 	"gorm.io/gorm"
 	"time"
@@ -36,6 +37,13 @@ func (dao *SLDao) SignIn(ctx context.Context, username string) (*model.User, err
 	return user, nil
 }
 
+func (dao *SLDao) IncrScore(ctx context.Context, userId int32) error {
+	updates := map[string]interface{}{
+		"score": gorm.Expr("score+ ?", 1),
+	}
+	return dao.db.WithContext(ctx).Table("user").Select("score").Where("id = ?", userId).Updates(updates).Error
+}
+
 func (dao *SLDao) GetUserByIds(ctx context.Context, userIds []int32) ([]*model.User, error) {
 	var users []*model.User
 	err := dao.db.WithContext(ctx).Table("user").Where("id in ?", userIds).Find(&users).Error
@@ -48,6 +56,7 @@ func (dao *SLDao) GetUserByIds(ctx context.Context, userIds []int32) ([]*model.U
 func (dao *SLDao) CreateGame(ctx context.Context, curUserId int32, gameMap string) (int32, error) {
 	game := &model.Game{
 		Map:       gameMap,
+		Process:   "[]",
 		CurUserID: curUserId,
 		CreateAt:  time.Now(),
 	}
@@ -58,11 +67,40 @@ func (dao *SLDao) CreateGame(ctx context.Context, curUserId int32, gameMap strin
 	return game.ID, nil
 }
 
+func (dao *SLDao) UpdateGameProcess(ctx context.Context, gameId, userId, num int32) error {
+	var process string
+	err := dao.db.WithContext(ctx).Table("game").Select("process").Where("id = ?", gameId).Limit(1).Find(&process).Error
+	if err != nil {
+		return err
+	}
+	processMap := make([]map[string]interface{}, 0)
+	err = json.Unmarshal([]byte(process), &processMap)
+	if err != nil {
+		return err
+	}
+	processMap = append(processMap, map[string]interface{}{
+		"user_id": userId,
+		"num":     num,
+	})
+	processJson, _ := json.Marshal(processMap)
+	game := &model.Game{
+		Process: string(processJson),
+	}
+	return dao.db.WithContext(ctx).Table("game").Select("process").Where("id = ?", gameId).Updates(game).Error
+}
+
 func (dao *SLDao) UpdateCurUserId(ctx context.Context, curUserId, gameId int32) error {
 	game := &model.Game{
 		CurUserID: curUserId,
 	}
 	return dao.db.WithContext(ctx).Table("game").Select("cur_user_id").Where("id = ?", gameId).Updates(game).Error
+}
+
+func (dao *SLDao) UpdateVictory(ctx context.Context, victory, gameId int32) error {
+	game := &model.Game{
+		Victory: victory,
+	}
+	return dao.db.WithContext(ctx).Table("game").Select("victory").Where("id = ?", gameId).Updates(game).Error
 }
 
 func (dao *SLDao) GetGameById(ctx context.Context, gameId int32) (*model.Game, error) {

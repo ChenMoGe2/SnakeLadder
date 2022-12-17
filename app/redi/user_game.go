@@ -35,3 +35,12 @@ func (c *UserGameRedis) GetUserGame(ctx context.Context, userId int32) (int32, e
 	}
 	return int32(gameId), nil
 }
+
+func (c *UserGameRedis) DelUserGame(ctx context.Context, userId int32) error {
+	key := common.UserGame + strconv.FormatInt(int64(userId), 10)
+	err := c.redis.Del(ctx, key).Err()
+	if err != nil {
+		return err
+	}
+	return nil
+}

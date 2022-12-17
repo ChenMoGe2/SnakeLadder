@@ -10,6 +10,7 @@ type Game struct {
 	Map       string    `gorm:"column:map;type:varchar(2048);not null;default:[]"`
 	Process   string    `gorm:"column:process;type:varchar(2048);not null"`
 	CurUserID int32     `gorm:"column:cur_user_id;type:int;not null"`
+	Victory   int32     `gorm:"column:victory;type:int;not null"`
 	CreateAt  time.Time `gorm:"column:create_at;type:timestamp;not null;default:CURRENT_TIMESTAMP"`
 }
 
@@ -19,12 +20,14 @@ var GameColumns = struct {
 	Map       string
 	Process   string
 	CurUserID string
+	Victory   string
 	CreateAt  string
 }{
 	ID:        "id",
 	Map:       "map",
 	Process:   "process",
 	CurUserID: "cur_user_id",
+	Victory:   "victory",
 	CreateAt:  "create_at",
 }
 

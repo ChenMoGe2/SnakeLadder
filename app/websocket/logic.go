@@ -138,7 +138,7 @@ func (s *BizLogic) Doll(userId int32, args *slproto.Doll) (*slproto.DollResult, 
 	if err != nil {
 		return nil, err
 	}
-	if userId == modelGame.CurUserID {
+	if userId == modelGame.CurUserID && modelGame.Victory == 0 {
 		curPos, err := s.slDao.GetCurPosByUserId(context.Background(), gameId, userId)
 		if err != nil {
 			return nil, err
@@ -157,6 +157,10 @@ func (s *BizLogic) Doll(userId int32, args *slproto.Doll) (*slproto.DollResult, 
 			return nil, err
 		}
 		err = s.slDao.UpdateCurUserId(context.Background(), nextUserId, gameId)
+		if err != nil {
+			return nil, err
+		}
+		err = s.slDao.UpdateGameProcess(context.Background(), gameId, userId, doll)
 		if err != nil {
 			return nil, err
 		}
@@ -190,6 +194,24 @@ func (s *BizLogic) Doll(userId int32, args *slproto.Doll) (*slproto.DollResult, 
 		err = websocketConnection.Send(responseBytes)
 		if err != nil {
 			return nil, err
+		}
+		if newPos == 100 {
+			err = s.slDao.UpdateVictory(context.Background(), userId, gameId)
+			if err != nil {
+				return nil, err
+			}
+			err = s.slDao.IncrScore(context.Background(), userId)
+			if err != nil {
+				return nil, err
+			}
+			err = s.userGameRedis.DelUserGame(context.Background(), userId)
+			if err != nil {
+				return nil, err
+			}
+			err = s.userGameRedis.DelUserGame(context.Background(), nextUserId)
+			if err != nil {
+				return nil, err
+			}
 		}
 		return dollResult, nil
 	}
