@@ -217,3 +217,16 @@ func (s *BizLogic) Doll(userId int32, args *slproto.Doll) (*slproto.DollResult, 
 	}
 	return nil, nil
 }
+
+func (s *BizLogic) Replay(userId int32, args *slproto.Replay) (*slproto.ReplayResult, error) {
+	gameId := args.GetGameId()
+	modelGame, err := s.slDao.GetGameById(context.Background(), gameId)
+	if err != nil {
+		return nil, err
+	}
+	replayResult := &slproto.ReplayResult{
+		GameId:  gameId,
+		Process: modelGame.Process,
+	}
+	return replayResult, nil
+}

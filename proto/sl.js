@@ -1230,6 +1230,216 @@ $root.slproto = (function() {
         return DollResult;
     })();
 
+    slproto.ReplayResult = (function() {
+
+        /**
+         * Properties of a ReplayResult.
+         * @memberof slproto
+         * @interface IReplayResult
+         * @property {number|null} [gameId] ReplayResult gameId
+         * @property {string|null} [process] ReplayResult process
+         */
+
+        /**
+         * Constructs a new ReplayResult.
+         * @memberof slproto
+         * @classdesc Represents a ReplayResult.
+         * @implements IReplayResult
+         * @constructor
+         * @param {slproto.IReplayResult=} [properties] Properties to set
+         */
+        function ReplayResult(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ReplayResult gameId.
+         * @member {number} gameId
+         * @memberof slproto.ReplayResult
+         * @instance
+         */
+        ReplayResult.prototype.gameId = 0;
+
+        /**
+         * ReplayResult process.
+         * @member {string} process
+         * @memberof slproto.ReplayResult
+         * @instance
+         */
+        ReplayResult.prototype.process = "";
+
+        /**
+         * Creates a new ReplayResult instance using the specified properties.
+         * @function create
+         * @memberof slproto.ReplayResult
+         * @static
+         * @param {slproto.IReplayResult=} [properties] Properties to set
+         * @returns {slproto.ReplayResult} ReplayResult instance
+         */
+        ReplayResult.create = function create(properties) {
+            return new ReplayResult(properties);
+        };
+
+        /**
+         * Encodes the specified ReplayResult message. Does not implicitly {@link slproto.ReplayResult.verify|verify} messages.
+         * @function encode
+         * @memberof slproto.ReplayResult
+         * @static
+         * @param {slproto.IReplayResult} message ReplayResult message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ReplayResult.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
+            if (message.process != null && message.hasOwnProperty("process"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.process);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ReplayResult message, length delimited. Does not implicitly {@link slproto.ReplayResult.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof slproto.ReplayResult
+         * @static
+         * @param {slproto.IReplayResult} message ReplayResult message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ReplayResult.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ReplayResult message from the specified reader or buffer.
+         * @function decode
+         * @memberof slproto.ReplayResult
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {slproto.ReplayResult} ReplayResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ReplayResult.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.slproto.ReplayResult();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.gameId = reader.int32();
+                    break;
+                case 2:
+                    message.process = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ReplayResult message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof slproto.ReplayResult
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {slproto.ReplayResult} ReplayResult
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ReplayResult.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ReplayResult message.
+         * @function verify
+         * @memberof slproto.ReplayResult
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ReplayResult.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
+            if (message.process != null && message.hasOwnProperty("process"))
+                if (!$util.isString(message.process))
+                    return "process: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a ReplayResult message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof slproto.ReplayResult
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {slproto.ReplayResult} ReplayResult
+         */
+        ReplayResult.fromObject = function fromObject(object) {
+            if (object instanceof $root.slproto.ReplayResult)
+                return object;
+            var message = new $root.slproto.ReplayResult();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
+            if (object.process != null)
+                message.process = String(object.process);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ReplayResult message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof slproto.ReplayResult
+         * @static
+         * @param {slproto.ReplayResult} message ReplayResult
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ReplayResult.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.gameId = 0;
+                object.process = "";
+            }
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
+            if (message.process != null && message.hasOwnProperty("process"))
+                object.process = message.process;
+            return object;
+        };
+
+        /**
+         * Converts this ReplayResult to JSON.
+         * @function toJSON
+         * @memberof slproto.ReplayResult
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ReplayResult.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ReplayResult;
+    })();
+
     slproto.SignIn = (function() {
 
         /**
@@ -1762,6 +1972,193 @@ $root.slproto = (function() {
         };
 
         return Doll;
+    })();
+
+    slproto.Replay = (function() {
+
+        /**
+         * Properties of a Replay.
+         * @memberof slproto
+         * @interface IReplay
+         * @property {number|null} [gameId] Replay gameId
+         */
+
+        /**
+         * Constructs a new Replay.
+         * @memberof slproto
+         * @classdesc Represents a Replay.
+         * @implements IReplay
+         * @constructor
+         * @param {slproto.IReplay=} [properties] Properties to set
+         */
+        function Replay(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Replay gameId.
+         * @member {number} gameId
+         * @memberof slproto.Replay
+         * @instance
+         */
+        Replay.prototype.gameId = 0;
+
+        /**
+         * Creates a new Replay instance using the specified properties.
+         * @function create
+         * @memberof slproto.Replay
+         * @static
+         * @param {slproto.IReplay=} [properties] Properties to set
+         * @returns {slproto.Replay} Replay instance
+         */
+        Replay.create = function create(properties) {
+            return new Replay(properties);
+        };
+
+        /**
+         * Encodes the specified Replay message. Does not implicitly {@link slproto.Replay.verify|verify} messages.
+         * @function encode
+         * @memberof slproto.Replay
+         * @static
+         * @param {slproto.IReplay} message Replay message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Replay.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Replay message, length delimited. Does not implicitly {@link slproto.Replay.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof slproto.Replay
+         * @static
+         * @param {slproto.IReplay} message Replay message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Replay.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Replay message from the specified reader or buffer.
+         * @function decode
+         * @memberof slproto.Replay
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {slproto.Replay} Replay
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Replay.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.slproto.Replay();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.gameId = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Replay message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof slproto.Replay
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {slproto.Replay} Replay
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Replay.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Replay message.
+         * @function verify
+         * @memberof slproto.Replay
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Replay.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a Replay message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof slproto.Replay
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {slproto.Replay} Replay
+         */
+        Replay.fromObject = function fromObject(object) {
+            if (object instanceof $root.slproto.Replay)
+                return object;
+            var message = new $root.slproto.Replay();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Replay message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof slproto.Replay
+         * @static
+         * @param {slproto.Replay} message Replay
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Replay.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.gameId = 0;
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
+            return object;
+        };
+
+        /**
+         * Converts this Replay to JSON.
+         * @function toJSON
+         * @memberof slproto.Replay
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Replay.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Replay;
     })();
 
     return slproto;

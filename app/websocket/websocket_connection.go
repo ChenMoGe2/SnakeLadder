@@ -107,6 +107,27 @@ func (websocketConnection *WebsocketConnection) Recv(buf []byte) {
 			responseSLObject.Crc32 = common.CRC32DollResult
 			responseSLObject.ReqCrc32 = slObject.Crc32
 		}
+	case common.CRC32Replay:
+		args := slproto.Replay{}
+		err = proto.Unmarshal(slObject.Object, &args)
+		if err != nil {
+			log.Log().Error("unmarshal Replay failed", zap.Error(err))
+			return
+		}
+		reply, err := websocketConnection.bizLogic.Replay(userId, &args)
+		if err != nil {
+			log.Log().Error("biz logic Replay failed", zap.Error(err))
+			return
+		}
+		replyBytes, err := proto.Marshal(reply)
+		if err != nil {
+			log.Log().Error("marshal reply failed", zap.Error(err))
+			return
+		}
+		responseSLObject.SessionId = slObject.GetSessionId()
+		responseSLObject.Object = replyBytes
+		responseSLObject.Crc32 = common.CRC32ReplayResult
+		responseSLObject.ReqCrc32 = slObject.Crc32
 	}
 	responseBytes, err := proto.Marshal(responseSLObject)
 	if err != nil {

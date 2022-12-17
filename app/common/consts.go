@@ -20,9 +20,11 @@ const (
 	CRC32SignIn int32 = 10001
 	CRC32Match  int32 = 10002
 	CRC32Doll   int32 = 10003
+	CRC32Replay int32 = 10004
 
-	CRC32User        int32 = 20001
-	CRC32Bool        int32 = 20002
-	CRC32MatchResult int32 = 20003
-	CRC32DollResult  int32 = 20004
+	CRC32User         int32 = 20001
+	CRC32Bool         int32 = 20002
+	CRC32MatchResult  int32 = 20003
+	CRC32DollResult   int32 = 20004
+	CRC32ReplayResult int32 = 20005
 )

@@ -35,6 +35,11 @@ message DollResult {
   int32 nextPlayer = 4;
 }
 
+message ReplayResult {
+  int32 gameId = 1;
+  string process = 2;
+}
+
 message SignIn {
   string username = 1;
 }
@@ -45,4 +50,8 @@ message Match {
 
 message Doll {
 
+}
+
+message Replay {
+  int32 gameId = 1;
 }
