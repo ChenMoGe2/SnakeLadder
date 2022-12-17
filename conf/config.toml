@@ -1,0 +1,35 @@
+[ServerConf]
+websocketPort = 3000
+
+[LogConf]
+logFile = "/data1/logs/SnakeLadder/app.log"
+maxSize = 1
+maxBackUp = 5
+maxAge = 10
+
+[RedisConf]
+redisAddress = "127.0.0.1:6379"
+redisPassword = ""
+redisPoolSize = 15
+redisMinIdleConns = 10
+redisDialTimeout = 5
+redisReadTimeout = 3
+redisWriteTimeout = 3
+redisPoolTimeout = 4
+redisIdleCheckFrequency = 60
+redisIdleTimeout = 5
+redisMaxConnAge = 0
+redisMaxRetries = 2
+redisMinRetryBackoff = 8
+redisMaxRetryBackoff = 512
+
+[DbConf]
+mysqlHost = "127.0.0.1"
+mysqlPort = 3306
+mysqlUsername = "root"
+mysqlPassword = "54007zty"
+mysqlDbName = "slgame"
+mysqlCharset = "utf8mb4"
+mysqlConnMaxLifetime = 180
+mysqlMaxOpenConns = 10
+mysqlMaxIdleConns = 10

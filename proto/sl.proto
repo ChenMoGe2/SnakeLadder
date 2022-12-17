@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package slproto;
+
+option optimize_for = CODE_SIZE;
+
+message SLObject {
+  int32 sessionId = 1;
+  int32 crc32 = 2;
+  int32 reqCrc32 = 3;
+  bytes object = 4;
+}
+
+message MatchResult {
+  int32 id = 1;
+  repeated User users = 2;
+  string map = 3;
+  int32 curUserId = 4;
+}
+
+message Bool {
+  bool value = 1;
+}
+
+message User {
+  int32 id = 1;
+  string username = 2;
+  int32 score = 3;
+}
+
+message DollResult {
+  int32 num = 1;
+  int32 curPos = 2;
+  int32 curPlayer = 3;
+  int32 nextPlayer = 4;
+}
+
+message SignIn {
+  string username = 1;
+}
+
+message Match {
+  int32 num = 1;
+}
+
+message Doll {
+
+}
